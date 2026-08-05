@@ -1,0 +1,330 @@
+/* ---------- RESET ---------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ---------- BODY ---------- */
+
+body {
+
+    font-family: "Inter", sans-serif;
+
+    color: #222;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    padding: 40px 20px;
+
+background:
+    radial-gradient(
+        circle at top left,
+        rgba(170, 120, 255, .16),
+        transparent 35%
+    ),
+
+    radial-gradient(
+        circle at bottom right,
+        rgba(120, 170, 255, .12),
+        transparent 35%
+    ),
+
+    #f4f5f7;
+
+}
+
+.container {
+
+    width: 100%;
+
+    max-width: 700px;
+
+}
+
+/* ---------- CONTENIDO ---------- */
+
+main {
+
+    width: 100%;
+
+    max-width: 700px;
+
+}
+
+/* ---------- CABECERA ---------- */
+
+header {
+
+    text-align: center;
+
+    margin-bottom: 40px;
+
+}
+
+header h1 {
+
+    font-size: 2rem;
+
+    margin-bottom: 10px;
+
+}
+
+header p {
+
+    color: #666;
+
+}
+
+/* ---------- FORMULARIO ---------- */
+
+form {
+
+    background: rgba(255, 255, 255, .92);
+    backdrop-filter: blur(10px);
+
+
+    padding: 30px;
+
+    border-radius: 24px;
+
+    box-shadow: 0 20px 40px rgba(0,0,0,.08);
+
+}
+
+/* ---------- SECCIONES ---------- */
+
+section {
+
+    margin-bottom: 35px;
+
+}
+
+section:last-of-type {
+
+    margin-bottom: 20px;
+
+}
+
+/* ---------- TÍTULOS ---------- */
+
+h2 {
+
+    font-size: 1.2rem;
+
+    margin-bottom: 10px;
+
+}
+
+/* ---------- LABEL ---------- */
+
+label {
+
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #555;
+
+}
+
+/* ---------- TEXTAREA ---------- */
+
+textarea {
+
+    width: 100%;
+
+    min-height: 120px;
+
+    padding: 15px;
+
+    resize: vertical;
+
+    font-size: 1rem;
+
+    border: 1px solid #d8d8d8;
+
+    border-radius: 12px;
+
+    outline: none;
+
+    transition: .2s;
+
+}
+
+textarea:focus {
+
+    border-color: #4f8ef7;
+    box-shadow: 0 0 0 4px rgba(79, 142, 247, .12);
+
+}
+
+/* ---------- RANGE ---------- */
+
+input[type="range"] {
+
+    width: 100%;
+
+    margin-top: 15px;
+
+}
+
+/* ---------- BOTÓN ---------- */
+
+button {
+
+    width: 100%;
+
+    padding: 16px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #4f8ef7;
+
+    color: white;
+
+    font-size: 1rem;
+
+    cursor: pointer;
+
+    transition: .2s;
+
+}
+
+button:hover {
+
+    background: #3a76d8;
+
+}
+
+/* ---------- PACIENTES ---------- */
+.patientCard {
+
+    background: rgba(255, 255, 255, .9);
+    backdrop-filter: blur(10px);
+
+    padding: 20px;
+
+    border-radius: 20px;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: .2s;
+
+}
+
+.patientLink {
+
+    text-decoration: none;
+
+    color: inherit;
+
+}
+
+.patientCard h2 {
+
+    margin-bottom: 10px;
+
+}
+
+.patientCard p {
+
+    color: #666;
+
+    margin-bottom: 5px;
+
+}
+
+.patientCard:hover {
+
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(0,0,0,.12);
+}
+
+/* ---------- MENÚ REGISTROS ---------- */
+
+.recordCard {
+
+    background: white;
+
+    padding: 20px;
+
+    border-radius: 20px;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+
+    margin-bottom: 20px;
+
+}
+
+.recordCard h2 {
+
+    margin-bottom: 10px;
+
+}
+
+.recordCard p {
+
+    color: #666;
+
+}
+
+/* ---------- REGISTROS ---------- */
+
+.recordCardFull {
+
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 20px;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+
+    margin-bottom: 20px;
+
+}
+
+.recordCardFull h2 {
+
+    margin-top: 25px;
+
+}
+
+.recordCardFull h2:first-child {
+
+    margin-top: 0;
+
+}
+
+/* ---------- BOTÓN ATRÁS ---------- */
+
+.backButton {
+
+    display: inline-block;
+
+    margin-bottom: 20px;
+
+    color: #666;
+
+    text-decoration: none;
+
+    transition: .2s;
+
+}
+
+
+.backButton:hover {
+
+    color: #4f8ef7;
+
+}

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+</head>
+<body>
+  <div class="container">
+    <header>
+        <h1>Registro</h1>
+        <p>Completa los siguientes campos.</p>
+    </header>
+
+    <main>
+
+        <form autocomplete="off">
+
+            <section>
+                <h2>Disparador</h2>
+
+                <label for="trigger">
+                    Acontecimiento desencadenante del malestar, qué ha pasado o qué tenía que pasar y no se ha dado
+                </label>
+
+                <textarea
+                    id="trigger"
+                    name="trigger"
+                    rows="5"
+                ></textarea>
+            </section>
+
+            <section>
+                <h2>Imagen</h2>
+
+                <label for="image">
+                    ¿Qué imagen o escena se ha formado en nuestra mente? ¿Qué ves o te imaginas cuando recuerdas la situación al cerrar los ojos?
+                </label>
+
+                <textarea
+                    id="image"
+                    name="image"
+                    rows="5"
+                ></textarea>
+            </section>
+
+            <section>
+                <h2>Cognición</h2>
+
+                <label for="cognition">
+                    ¿Qué pensamiento o creencia ha provocado en ti?
+                </label>
+
+                <textarea
+                    id="cognition"
+                    name="cognition"
+                    rows="5"
+                ></textarea>
+            </section>
+
+            <section>
+                <h2>Emoción</h2>
+
+                <label for="emotion">
+                    ¿Qué emoción has sentido en esa situación perturbadora?
+                </label>
+
+                <textarea
+                    id="emotion"
+                    name="emotion"
+                    rows="3"
+                ></textarea>
+            </section>
+
+            <section>
+                <h2>Sensación</h2>
+
+                <label for="sensation">
+                    ¿Qué nivel de perturbación has sentido?
+                </label>
+                <p>
+                  0 = ninguna<br>
+                  10 = la máxima que puedes imaginar
+                </p>
+
+                <input
+                    type="range"
+                    id="sensation"
+                    name="sensation"
+                    min="0"
+                    max="10"
+                    value="0"
+                >
+            </section>
+
+            <button type="submit">
+                Guardar registro
+            </button>
+
+            <a href="patients.html" class="backButton">
+                Acceso profesional
+            </a>
+        </form>
+
+    </main>
+  </div>
+</body>
+</html>
