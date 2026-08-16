@@ -328,3 +328,33 @@ button:hover {
     color: #4f8ef7;
 
 }
+
+
+/* ---------- FOOTER---------- */
+
+
+.appFooter {
+
+    margin-top: 30px;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 20px;
+
+}
+
+.appFooter a {
+
+    text-decoration: none;
+
+    color: #666;
+
+}
+
+.appFooter a:hover {
+
+    color: #4f8ef7;
+
+}
