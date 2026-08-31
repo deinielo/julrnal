@@ -7,6 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4f8ef7">
     <title>Paciente</title>
 </head>
     <body>
@@ -17,18 +19,24 @@
         </a>
 
             <header>
-                <h1>Daniel</h1>
+                <h1 id="patientName">Daniel</h1>
                 <p>Historial de registros</p>
             </header>
 
-            <main id="recordsList">
-                
-            </main>
+            <h2>Registros</h2>
+
+<main id="recordsList">
+</main>
+
+<h2>Las tres columnas</h2>
+
+<main id="threeColumnsList">
+</main>
                     <footer class="appFooter">
 
-    <a href="index.html">Registro</a>
+    <a href="index.html" id="patientRecordLink">Registro</a>
 
-    <a href="threecolumns.html">3 Columnas</a>
+    <a href="threecolumns.html" id="patientThreeColumnsLink">3 Columnas</a>
 
     <a href="patients.html">Profesional</a>
 
