@@ -17,7 +17,7 @@
                 <h1>Pacientes</h1>
                 <p>Selecciona un paciente para ver sus registros</p>
             </header>
-
+            <button id="logout">Cerrar sesión</button>
 <main id="patientsList">
 </main>
                     <footer class="appFooter">
@@ -30,6 +30,37 @@
 
 </footer>
         </div>
+       <script type="module">
+    import { onAuthStateChanged, signOut } 
+    from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+import { doc, getDoc } 
+    from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+    import { auth, db } from "./firebase.js";
+
+    onAuthStateChanged(auth, async function(user) {
+    if (!user) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+
+    if (userDoc.exists()) {
+    const role = userDoc.data().role;
+
+    if (role !== "pro") {
+        window.location.href = "index.html";
+    }
+}
+});
+
+    document.querySelector("#logout").addEventListener("click", async function() {
+        await signOut(auth);
+        window.location.href = "login.html";
+    });
+</script>
         <script src="script.js"></script>
         <script>
 if ("serviceWorker" in navigator) {
