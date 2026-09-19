@@ -18,7 +18,7 @@
             </a>
             <header>
                 <h1>Registro</h1>
-                <p>01/08/2026</p>
+                <p id="recordDate"></p>
             </header>
 
         <main>
@@ -27,22 +27,32 @@
 <section class="recordCardFull">
 
     <h2>Disparador</h2>
-    <p id="recordTrigger">Introducir disparador</p>
+    <p id="recordTrigger"></p>
 
     <h2>Imagen</h2>
-    <p id="recordImage">Introducir imagen</p>
+    <p id="recordImage"></p>
 
     <h2>Cognición</h2>
-    <p id="recordCognition">Introducir cognición</p>
+    <p id="recordCognition"></p>
 
     <h2>Emoción</h2>
-    <p>Introducir emoción</p>
+    <p id="recordEmotion"></p>
 
     <h2>Sensación</h2>
-    <p id="recordSensation">7/10</p>
+    <p id="recordSensation"></p>
 
 </section>
+    <button id="editRecord">Editar</button>
+    <button id="deleteRecord">Eliminar</button>
 
+<div id="editForm" style="display: none;">
+    <textarea id="editTrigger"></textarea>
+    <textarea id="editImage"></textarea>
+    <textarea id="editCognition"></textarea>
+    <textarea id="editEmotion"></textarea>
+    <input type="number" id="editSensation" min="0" max="10">
+    <button id="saveRecord">Guardar cambios</button>
+</div>
         </main>
                 <footer class="appFooter">
 
@@ -54,7 +64,91 @@
 
 </footer>
         </div>
-        <script src="script.js"></script>
+        <script type="module">
+    import { onAuthStateChanged }
+    from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+    import { doc, getDoc, updateDoc, deleteDoc }
+from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+    import { auth, db } from "./firebase.js";
+
+    onAuthStateChanged(auth, async function(user) {
+
+        if (!user) {
+            window.location.href = "login.html";
+            return;
+        }
+
+        const params = new URLSearchParams(window.location.search);
+        const recordId = params.get("id");
+
+        if (!recordId) {
+            window.location.href = "patients.html";
+            return;
+        }
+
+        const recordDoc = await getDoc(
+            doc(db, "records", recordId)
+        );
+
+        if (!recordDoc.exists()) {
+            window.location.href = "patients.html";
+            return;
+        }
+
+        const record = recordDoc.data();
+
+document.querySelector("#editRecord").addEventListener("click", function() {
+    document.querySelector("#editForm").style.display = "block";
+
+    document.querySelector("#editTrigger").value = record.trigger;
+    document.querySelector("#editImage").value = record.image;
+    document.querySelector("#editCognition").value = record.cognition;
+    document.querySelector("#editEmotion").value = record.emotion;
+    document.querySelector("#editSensation").value = record.sensation;
+});
+
+document.querySelector("#saveRecord").addEventListener("click", async function() {
+
+    await updateDoc(
+        doc(db, "records", recordId),
+        {
+            trigger: document.querySelector("#editTrigger").value,
+            image: document.querySelector("#editImage").value,
+            cognition: document.querySelector("#editCognition").value,
+            emotion: document.querySelector("#editEmotion").value,
+            sensation: Number(document.querySelector("#editSensation").value)
+        }
+    );
+
+    window.location.reload();
+});
+
+document.querySelector("#deleteRecord").addEventListener("click", async function() {
+
+    await deleteDoc(
+        doc(db, "records", recordId)
+    );
+
+    window.location.href = "patient.html?id=" + record.patientId;
+});
+
+        document.querySelector(".backButton").href =
+    "patient.html?id=" + record.patientId;
+
+        document.querySelector("#recordTrigger").textContent = record.trigger;
+        document.querySelector("#recordImage").textContent = record.image;
+        document.querySelector("#recordCognition").textContent = record.cognition;
+        document.querySelector("#recordEmotion").textContent = record.emotion;
+        document.querySelector("#recordSensation").textContent = record.sensation + "/10";
+
+        const date = record.date.toDate();
+
+        document.querySelector("#recordDate").textContent =
+            date.toLocaleDateString("es-ES");
+    });
+</script>
         <script>
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js");
