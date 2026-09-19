@@ -9,87 +9,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#4f8ef7">
-    <title>Registro</title>
+    <title>Las tres columnas</title>
 </head>
     <body>
-
         <div class="container">
-
+                        <a href="patient.html" class="backButton">
+    ← Volver a historial
+            </a>
             <header>
                 <h1>Las tres columnas</h1>
-                <p>Identifica el pensamiento, la distorsión y una respuesta alternativa.</p>
+                <p id="threeColumnsDate"></p>
             </header>
 
-            <main>
-                <form class="threeColumnsForm" autocomplete="off">
+        <main>
 
-            <section>
-                <h2>La crítica</h2>
 
-                <label for="critica">
-                    Escribe el pensamiento negativo que has tenido sobre ti (ej: "He cometido un error en la reunión y soy un desastre").
-                </label>
+<section class="recordCardFull">
 
-                <textarea
-                    id="critica"
-                    name="critica"
-                    rows="5"
-                ></textarea>
-            </section>
+    <h2>La crítica</h2>
+    <p id="threeColumnsCritica"></p>
 
-            <section>
-                <h2>La distorsión</h2>
+    <h2>La distorsión</h2>
+    <p id="threeColumnsDistorsion"></p>
 
-                <label for="distorsion">
-                    Identifica el error de lógica. En este caso, estás generalizando un fallo puntual a toda tu persona.
-                </label>
+    <h2>Respuesta compasiva</h2>
+    <p id="threeColumnsRespuesta"></p>
+    <button id="editThreeColumns">Editar</button>
+    <button id="deleteThreeColumns">Eliminar</button>
 
-                <textarea
-                    id="distorsion"
-                    name="distorsion"
-                    rows="5"
-                ></textarea>
-            </section>
+<div id="editThreeColumnsForm" style="display: none;">
+    <textarea id="editCritica"></textarea>
+    <textarea id="editDistorsion"></textarea>
+    <textarea id="editRespuesta"></textarea>
+    <button id="saveThreeColumns">Guardar cambios</button>
+</div>
 
-            <section>
-                <h2>Respuesta compasiva</h2>
+</section>
 
-                <label for="respuesta_compasiva">
-                    Responde con hechos objetivos y amabilidad (ej: "Cometer un error no me define; he solucionado problemas similares antes y hoy he hecho lo mejor que he podido").
-                </label>
-
-                <textarea
-                    id="respuesta_compasiva"
-                    name="respuesta_compasiva"
-                    rows="5"
-                ></textarea>
-            </section>
-
-            <button type="submit">
-                Guardar registro
-            </button>
-        </form>
         </main>
+                <footer class="appFooter">
 
-        <footer class="appFooter">
+    <a href="index.html">Registro</a>
 
-            <a href="index.html">Registro</a>
+    <a href="threecolumns.html">3 Columnas</a>
 
-            <a href="threecolumns.html">3 Columnas</a>
+    <a href="patients.html">Profesional</a>
 
-            <a href="patients.html">Profesional</a>
-
-        </footer>
-
-        <div id="toast" class="toast">Guardado correctamente</div>
-
-        <script src="script.js"></script>
+</footer>
+        </div>
+        <script type="module" src="script.js?v=2"></script>
         <script>
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js");
 }
 </script>
-    </div>
-
-</body>
+    </body>
 </html>
