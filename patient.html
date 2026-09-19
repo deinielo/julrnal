@@ -19,7 +19,7 @@
         </a>
 
             <header>
-                <h1 id="patientName">Daniel</h1>
+                <h1 id="patientName"></h1>
                 <p>Historial de registros</p>
             </header>
 
@@ -34,15 +34,94 @@
 </main>
                     <footer class="appFooter">
 
-    <a href="index.html" id="patientRecordLink">Registro</a>
+<a href="index.html">Registro</a>
 
-    <a href="threecolumns.html" id="patientThreeColumnsLink">3 Columnas</a>
+<a href="threecolumns.html">3 Columnas</a>
 
     <a href="patients.html">Profesional</a>
 
 </footer>
         </div>
-        <script src="script.js"></script>
+        <script type="module">
+    import { onAuthStateChanged }
+    from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+import { doc, getDoc, collection, getDocs, query, where, orderBy }
+from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+    import { auth, db } from "./firebase.js";
+
+    onAuthStateChanged(auth, async function(user) {
+        if (!user) {
+            window.location.href = "login.html";
+            return;
+        }
+
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+
+        if (!userDoc.exists() || userDoc.data().role !== "pro") {
+            window.location.href = "index.html";
+            return;
+        }
+
+        const params = new URLSearchParams(window.location.search);
+        const patientId = params.get("id");
+
+        if (!patientId) {
+            window.location.href = "patients.html";
+            return;
+        }
+
+        const patientDoc = await getDoc(doc(db, "users", patientId));
+
+        if (!patientDoc.exists()) {
+            window.location.href = "patients.html";
+            return;
+        }
+
+        const patient = patientDoc.data();
+
+        document.querySelector("#patientName").textContent = patient.name;
+        const recordsQuery = query(
+    collection(db, "records"),
+    where("patientId", "==", patientId),
+    orderBy("date", "desc")
+);
+
+const recordsSnapshot = await getDocs(recordsQuery);
+
+const recordsList = document.querySelector("#recordsList");
+recordsList.innerHTML = "";
+
+recordsSnapshot.forEach((recordDoc) => {
+    const record = recordDoc.data();
+
+const link = document.createElement("a");
+link.href = "record.html?id=" + recordDoc.id;
+link.classList.add("patientLink");
+
+const card = document.createElement("article");
+card.classList.add("recordCard");
+
+    const date = record.date.toDate();
+
+    const title = document.createElement("h2");
+    title.textContent = date.toLocaleDateString("es-ES");
+
+    const sensation = document.createElement("p");
+    sensation.textContent = "Perturbación: " + record.sensation + "/10";
+
+card.appendChild(title);
+card.appendChild(sensation);
+
+link.appendChild(card);
+recordsList.appendChild(link);
+});
+    });
+</script>
+
+
+        <script type="module" src="script.js"></script>
         <script>
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js");
