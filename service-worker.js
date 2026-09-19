@@ -1,4 +1,4 @@
-const CACHE = "registro-v3";
+const CACHE = "registro-v4";
 
 const FILES = [
   "./",
@@ -14,9 +14,25 @@ const FILES = [
 ];
 
 self.addEventListener("install", event => {
-  event.waitUntil(
-    caches.open(CACHE).then(cache => cache.addAll(FILES))
-  );
+    self.skipWaiting();
+
+    event.waitUntil(
+        caches.open(CACHE).then(cache => cache.addAll(FILES))
+    );
+});
+
+self.addEventListener("activate", event => {
+    self.clients.claim();
+
+    event.waitUntil(
+        caches.keys().then(keys =>
+            Promise.all(
+                keys
+                    .filter(key => key !== CACHE)
+                    .map(key => caches.delete(key))
+            )
+        )
+    );
 });
 
 self.addEventListener("fetch", event => {
