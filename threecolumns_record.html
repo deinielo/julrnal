@@ -17,8 +17,8 @@
     ← Volver a historial
             </a>
             <header>
-                <h1>Registro</h1>
-                <p>01/08/2026</p>
+                <h1>Las tres columnas</h1>
+                <p id="threeColumnsDate"></p>
             </header>
 
         <main>
@@ -34,7 +34,15 @@
 
     <h2>Respuesta compasiva</h2>
     <p id="threeColumnsRespuesta"></p>
+    <button id="editThreeColumns">Editar</button>
+    <button id="deleteThreeColumns">Eliminar</button>
 
+<div id="editThreeColumnsForm" style="display: none;">
+    <textarea id="editCritica"></textarea>
+    <textarea id="editDistorsion"></textarea>
+    <textarea id="editRespuesta"></textarea>
+    <button id="saveThreeColumns">Guardar cambios</button>
+</div>
 
 </section>
 
@@ -49,7 +57,7 @@
 
 </footer>
         </div>
-        <script src="script.js"></script>
+        <script type="module" src="script.js?v=2"></script>
         <script>
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js");
