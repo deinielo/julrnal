@@ -30,38 +30,87 @@
 
 </footer>
         </div>
+        
        <script type="module">
     import { onAuthStateChanged, signOut } 
     from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
-import { doc, getDoc } 
+    import { doc, getDoc, collection, getDocs, query, where, orderBy }
     from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
     import { auth, db } from "./firebase.js";
 
     onAuthStateChanged(auth, async function(user) {
-    if (!user) {
-        window.location.href = "login.html";
-        return;
-    }
+        if (!user) {
+            window.location.href = "login.html";
+            return;
+        }
 
-    const userDoc = await getDoc(doc(db, "users", user.uid));
+        const userDoc = await getDoc(doc(db, "users", user.uid));
 
-    if (userDoc.exists()) {
-    const role = userDoc.data().role;
+        if (userDoc.exists()) {
+            const role = userDoc.data().role;
 
-    if (role !== "pro") {
-        window.location.href = "index.html";
-    }
+            if (role !== "pro") {
+                window.location.href = "index.html";
+                return;
+            }
+
+            const patientsQuery = query(
+                collection(db, "users"),
+                where("role", "==", "user")
+            );
+
+            const snapshot = await getDocs(patientsQuery);
+
+            const patientsList = document.querySelector("#patientsList");
+            patientsList.innerHTML = "";
+
+            for (const patient of snapshot.docs) {
+    
+
+    const data = patient.data();
+
+    const recordsQuery = query(
+    collection(db, "records"),
+    where("patientId", "==", patient.id),
+    orderBy("date", "desc")
+);
+
+const recordsSnapshot = await getDocs(recordsQuery);
+const recordsCount = recordsSnapshot.size;
+const lastRecord = recordsSnapshot.docs[0];
+let lastRecordDate = null;
+
+if (lastRecord) {
+    lastRecordDate = lastRecord.data().date.toDate();
 }
-});
+
+
+    patientsList.innerHTML += `
+    <article class="patientCard" data-id="${patient.id}">
+        <h3>${data.name}</h3>
+        <p>${data.email}</p>
+        <p>Registros: ${recordsCount}</p>
+        <p>Último registro: ${lastRecordDate ? lastRecordDate.toLocaleDateString("es-ES") : "Sin registros"}</p>
+    </article>
+`;
+}
+
+            document.querySelectorAll(".patientCard").forEach((card) => {
+                card.addEventListener("click", function() {
+                    const patientId = card.dataset.id;
+                    window.location.href = `patient.html?id=${patientId}`;
+                });
+            });
+        }
+    });
 
     document.querySelector("#logout").addEventListener("click", async function() {
         await signOut(auth);
         window.location.href = "login.html";
     });
 </script>
-        <script src="script.js"></script>
         <script>
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js");
