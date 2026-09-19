@@ -19,7 +19,7 @@
         <h1>Registro</h1>
         <p>Completa los siguientes campos.</p>
     </header>
-
+    <button id="logout">Cerrar sesión</button>
     <main>
 
         <form class="recordForm" autocomplete="off">
@@ -117,12 +117,59 @@
     </main>
   </div>
   <div id="toast" class="toast">Guardado correctamente</div>
-    <script type="module" src="firebase.js"></script>
     <script src="script.js"></script>
+
+<script type="module">
+    import { collection, addDoc, serverTimestamp }
+    from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+    import { auth, db } from "./firebase.js";
+
+    const recordForm = document.querySelector(".recordForm");
+
+    recordForm.addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        const user = auth.currentUser;
+
+        if (!user) {
+            window.location.href = "login.html";
+            return;
+        }
+
+        const trigger = document.querySelector("#trigger").value;
+        const image = document.querySelector("#image").value;
+        const cognition = document.querySelector("#cognition").value;
+        const emotion = document.querySelector("#emotion").value;
+        const sensation = document.querySelector("#sensation").value;
+
+        await addDoc(collection(db, "records"), {
+            patientId: user.uid,
+            trigger: trigger,
+            image: image,
+            cognition: cognition,
+            emotion: emotion,
+            sensation: Number(sensation),
+            date: serverTimestamp()
+        });
+
+        recordForm.reset();
+    });
+</script>
   <script>
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js");
 }
+</script>
+
+<script type="module">
+    import { signOut } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+    import { auth } from "./firebase.js";
+
+    document.querySelector("#logout").addEventListener("click", async function() {
+        await signOut(auth);
+        window.location.href = "login.html";
+    });
 </script>
 </body>
 </html>
