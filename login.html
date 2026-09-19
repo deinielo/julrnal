@@ -29,19 +29,34 @@
     import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged } 
         from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
-    import { auth } from "./firebase.js";
+    import { doc, getDoc, setDoc }
+        from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+    import { auth, db } from "./firebase.js";
 
     const provider = new GoogleAuthProvider();
 
-onAuthStateChanged(auth, function(user) {
-    if (user) {
-        window.location.href = "patients.html";
-    }
-});
+
 
     document.querySelector("#googleLogin").addEventListener("click", async function() {
         try {
             const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+console.log("USUARIO GOOGLE:", user.displayName, user.email);
+            const userRef = doc(db, "users", user.uid);
+            const userDoc = await getDoc(userRef);
+console.log("DOCUMENTO EXISTE:", userDoc.exists());
+            if (!userDoc.exists()) {
+    await setDoc(userRef, {
+        name: user.displayName,
+        email: user.email,
+        role: "user"
+    });
+
+    console.log("DOCUMENTO CREADO");
+}
+
+window.location.href = "patients.html";
 
         } catch (error) {
             console.error("Error al iniciar sesión:", error);
