@@ -117,7 +117,6 @@
     </main>
   </div>
   <div id="toast" class="toast">Guardado correctamente</div>
-    <script src="script.js"></script>
 
 <script type="module">
     import { collection, addDoc, serverTimestamp }
@@ -127,6 +126,11 @@
 
     const recordForm = document.querySelector(".recordForm");
 
+    function showToast(message) {
+
+showToast("Registro guardado");
+
+}
     recordForm.addEventListener("submit", async function(event) {
         event.preventDefault();
 
@@ -154,6 +158,15 @@
         });
 
         recordForm.reset();
+
+const toast = document.querySelector("#toast");
+
+toast.textContent = "Registro guardado";
+toast.classList.add("show");
+
+setTimeout(function() {
+    toast.classList.remove("show");
+}, 2000);
     });
 </script>
   <script>
